@@ -1,6 +1,7 @@
 package br.com.lookatthiscar.service
 
-import br.com.lookatthiscar.model.Car
+import br.com.lookatthiscar.exception.NoLicencePlateInImageException
+import br.com.lookatthiscar.validator.LicensePlateValidator
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.core.SdkBytes
@@ -13,13 +14,15 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 
 @Service
-class RekognitionService(val rekognitionClient: RekognitionClient) {
+class RekognitionService(
+    var rekognitionClient: RekognitionClient,
+    var licensePlateValidator: LicensePlateValidator
+) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun getCarLicencePlateFromImage(sourceImage: InputStream): Car {
+    fun getCarLicencePlateFromImage(sourceImage: InputStream): String {
         try {
-
             val sourceBytes = SdkBytes.fromInputStream(sourceImage)
             val souImage: Image = Image.builder()
                 .bytes(sourceBytes)
@@ -29,21 +32,24 @@ class RekognitionService(val rekognitionClient: RekognitionClient) {
                 .build()
             val textResponse: DetectTextResponse = rekognitionClient.detectText(textRequest)
             val textCollection = textResponse.textDetections()
-            for (text in textCollection) {
-                logger.debug("Detected: ${text.detectedText()}")
-                logger.debug("Confidence: ${text.confidence().toString()}")
-                logger.debug("Id: ${text.id()}")
-                logger.debug("Parent Id: ${text.parentId()}")
-                logger.debug("Type: ${text.type()}")
-            }
+            val licensePlate = textCollection.stream()
+                .filter { text -> text.confidence() > 50 }
+                .peek { text -> logger.debug("Possivel texto de placa encontrado: ${text.detectedText()} com confiabilidade: ${text.confidence()}") }
+                .map { text -> text.detectedText().filter { !it.isWhitespace() } }
+                .filter { text -> licensePlateValidator.validate(text) }
+                .findFirst()
+                .orElseThrow { NoLicencePlateInImageException("Nao foi possivel encontrar uma placa de carro na imagem recebida") }
+            logger.debug("Placa detectada: ${licensePlate}")
+            return licensePlate
+
         } catch (rekognitionException: RekognitionException) {
-                logger.error("Exception: ${rekognitionException.message}")
+            logger.error("Exception: ${rekognitionException.message}")
 
         } catch (fileNotFoundException: FileNotFoundException) {
-                logger.error("Exception: ${fileNotFoundException.message}")
+            logger.error("Exception: ${fileNotFoundException.message}")
 
         }
-        return Car("Creta", "TBD", 2022, "Renan Rodrigues")
+        throw IllegalArgumentException("A imagem que voce nos passou nao pode ser processada")
     }
 
 }

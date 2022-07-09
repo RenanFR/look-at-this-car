@@ -6,5 +6,5 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 data class EngineSize(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "CurrentValue")
-    val CurrentValue: String
+    val currentValue: String
 )
