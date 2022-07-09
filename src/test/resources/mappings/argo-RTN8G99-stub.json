@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/api/reg.asmx/CheckBrazil",
+    "queryParameters": {
+      "RegistrationNumber": {
+        "equalTo": "RTN8G99"
+      },
+      "username": {
+        "equalTo": "renanfr1047"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "sample-placaapi.xml",
+    "headers": {
+      "Content-Type": "application/xml"
+    }
+  }
+}
