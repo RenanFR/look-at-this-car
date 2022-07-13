@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface VehicleEnquiryRepository : JpaRepository<VehicleEnquiry, Int> {
 
-    @Query("SELECT new br.com.lookatthiscar.model.VehicleEnquiryDTO(vehicleEnquiry.licensePlate, vehicleEnquiry.enquiryDate, vehicle.carMake, vehicle.location, vehicle.carModel) FROM VehicleEnquiry vehicleEnquiry JOIN FETCH vehicleEnquiry.vehicle vehicle")
+    @Query("SELECT new br.com.lookatthiscar.model.VehicleEnquiryDTO(vehicleEnquiry.licensePlate, vehicleEnquiry.enquiryDate, vehicle.carMake, vehicle.location, vehicle.carModel) FROM VehicleEnquiry vehicleEnquiry JOIN vehicleEnquiry.vehicle vehicle")
     fun getAllVehicleEnquiries(): List<VehicleEnquiryDTO>
 
 }
