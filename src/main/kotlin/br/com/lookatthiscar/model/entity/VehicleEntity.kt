@@ -1,4 +1,4 @@
-package br.com.lookatthiscar.model
+package br.com.lookatthiscar.model.entity
 
 import javax.persistence.*
 
@@ -12,16 +12,16 @@ data class VehicleEntity(
 
     val description: String,
 
-    @Column(table = "registration_year")
+    @Column(name = "registration_year")
     val registrationYear: Int,
 
-    @Column(table = "car_make")
+    @Column(name = "car_make")
     val carMake: String,
 
-    @Column(table = "model")
+    @Column(name = "model")
     val carModel: String,
 
-    @Column(table = "image_url")
+    @Column(name = "image_url")
     val imageUrl: String?,
 
     val location: String?,
@@ -30,18 +30,22 @@ data class VehicleEntity(
     val colour: String?,
     val power: String?,
 
-    @Column(table = "engine_cc")
+    @Column(name = "engine_cc")
     val engineCc: String,
 
     val seats: String,
     val axles: String?,
 
-    @Column(table = "gross_weight")
+    @Column(name = "gross_weight")
     val grossWeight: String?,
 
-    @Column(table = "max_traction")
+    @Column(name = "max_traction")
     val maxTraction: String?,
 
-    @Column(table = "licence_plate")
-    val licencePlate: String?
+    @Column(name = "licence_plate")
+    val licencePlate: String?,
+
+    @OneToMany(mappedBy="vehicle")
+    val vehicleEnquiries: List<VehicleEnquiry>?
+
 )

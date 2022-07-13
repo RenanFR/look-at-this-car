@@ -4,7 +4,7 @@
     "urlPathPattern": "/api/reg.asmx/CheckBrazil",
     "queryParameters": {
       "RegistrationNumber": {
-        "equalTo": "RTN8G99"
+        "matches": "RTN8G99|J389NLT"
       },
       "username": {
         "equalTo": "renanfr1047"

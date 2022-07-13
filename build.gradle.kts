@@ -79,6 +79,8 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.5.2.Final")
     // https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor
     kapt("org.mapstruct:mapstruct-processor:1.5.2.Final")
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {

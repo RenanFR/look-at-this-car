@@ -2,6 +2,8 @@ package br.com.lookatthiscar
 
 import br.com.lookatthiscar.api.client.PlacaAPIClient
 import br.com.lookatthiscar.model.*
+import br.com.lookatthiscar.model.entity.VehicleEnquiry
+import br.com.lookatthiscar.repository.VehicleEnquiryRepository
 import br.com.lookatthiscar.repository.VehicleRepository
 import br.com.lookatthiscar.repository.mapper.VehicleMapper
 import br.com.lookatthiscar.service.LicensePlateService
@@ -11,14 +13,17 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mapstruct.factory.Mappers
+import java.time.LocalDateTime
 
-class LicensePlateServiceTest {
+class LicensePlateServiceUnitTest {
 
     val rekognitionService: RekognitionService = mockk()
     val placaAPIClient: PlacaAPIClient = mockk()
     val vehicleRepository: VehicleRepository = mockk()
+    val vehicleEnquiryRepository: VehicleEnquiryRepository = mockk()
 
-    val licensePlateService = LicensePlateService(rekognitionService, placaAPIClient, vehicleRepository);
+    val licensePlateService =
+        LicensePlateService(rekognitionService, placaAPIClient, vehicleRepository, vehicleEnquiryRepository);
 
     @Test
     fun shouldGetCarInformationFromLicensePlate() {
@@ -43,7 +48,9 @@ class LicensePlateServiceTest {
             )
         } returns
                 vehicle
-        every { vehicleRepository.save(any()) } returns vehicleMapper.entityFromDataDTO(vehicle.vehicleData)
+        val vehicleEntity = vehicleMapper.entityFromDataDTO(vehicle.vehicleData)
+        every { vehicleRepository.save(any()) } returns vehicleEntity
+        every { vehicleEnquiryRepository.save(any()) } returns VehicleEnquiry(null, LocalDateTime.now(), "RTN8G99", vehicleEntity)
         val car =
             licensePlateService.getCarInformationFromCarBasedOnLicensePlate(inputStream)
         assertEquals("RTN8G99", car.licensePlate)

@@ -1,4 +1,4 @@
-package br.com.lookatthiscar.model
+package br.com.lookatthiscar.model.entity
 
 import javax.persistence.*
 

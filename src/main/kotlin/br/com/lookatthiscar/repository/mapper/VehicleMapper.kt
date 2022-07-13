@@ -1,7 +1,7 @@
 package br.com.lookatthiscar.repository.mapper
 
 import br.com.lookatthiscar.model.VehicleData
-import br.com.lookatthiscar.model.VehicleEntity
+import br.com.lookatthiscar.model.entity.VehicleEntity
 import br.com.lookatthiscar.model.VehicleJson
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
