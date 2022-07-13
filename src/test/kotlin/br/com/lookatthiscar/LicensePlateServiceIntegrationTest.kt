@@ -22,8 +22,8 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest(
     classes =
     [H2TestConfig::class, LicensePlateService::class, RekognitionConfig::class,
-        RekognitionService::class, LicensePlateValidator::class, FeignConfig::class, PlacaAPIClient::class,
-        VehicleRepository::class, VehicleEnquiryRepository::class]
+        RekognitionService::class, LicensePlateValidator::class, FeignConfig::class,
+        PlacaAPIClient::class, VehicleRepository::class, VehicleEnquiryRepository::class]
 )
 @ActiveProfiles("test")
 @AutoConfigureWireMock(port = 2345, stubs = ["classpath*:/META-INF/**/mappings/**/*.json"])

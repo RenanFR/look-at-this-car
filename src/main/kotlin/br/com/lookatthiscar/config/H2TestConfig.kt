@@ -1,5 +1,6 @@
 package br.com.lookatthiscar.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -22,14 +23,23 @@ import javax.sql.DataSource
 @EnableTransactionManagement
 class H2TestConfig {
 
+    @Value("\${spring.datasource.url}")
+    private lateinit var datasourceUrl: String
+
+    @Value("\${spring.datasource.username}")
+    private lateinit var username: String
+
+    @Value("\${spring.datasource.password}")
+    private lateinit var password: String
+
     @Bean
     @Profile("test")
     fun dataSource(): DataSource? {
         val dataSource = DriverManagerDataSource()
         dataSource.setDriverClassName("org.h2.Driver")
-        dataSource.url = "jdbc:h2:mem:db;DB_CLOSE_DELAY=-1"
-        dataSource.username = "sa"
-        dataSource.password = "sa"
+        dataSource.url = datasourceUrl
+        dataSource.username = username
+        dataSource.password = password
         return dataSource
     }
 

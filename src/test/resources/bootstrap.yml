@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: look-at-this-car
+
+aws:
+  paramstore:
+    defaultContext: agama
+    prefix: /config
+    profileSeparator: _
+    enabled: true
+    failFast: true
