@@ -1,8 +1,9 @@
 package br.com.lookatthiscar
 
 import br.com.lookatthiscar.api.client.PlacaAPIClient
+import br.com.lookatthiscar.config.DBConfig
 import br.com.lookatthiscar.config.FeignConfig
-import br.com.lookatthiscar.config.H2TestConfig
+import br.com.lookatthiscar.config.PropertiesConfig
 import br.com.lookatthiscar.config.RekognitionConfig
 import br.com.lookatthiscar.repository.VehicleEnquiryRepository
 import br.com.lookatthiscar.repository.VehicleRepository
@@ -21,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @RunWith(SpringRunner::class)
 @SpringBootTest(
     classes =
-    [H2TestConfig::class, LicensePlateService::class, RekognitionConfig::class,
+    [DBConfig::class, PropertiesConfig::class, LicensePlateService::class, RekognitionConfig::class,
         RekognitionService::class, LicensePlateValidator::class, FeignConfig::class,
         PlacaAPIClient::class, VehicleRepository::class, VehicleEnquiryRepository::class]
 )

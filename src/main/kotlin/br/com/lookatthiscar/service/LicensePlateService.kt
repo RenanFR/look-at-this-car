@@ -47,6 +47,7 @@ class LicensePlateService(
             val vehicleData = objectMapper.readValue(vehicle.vehicleJson, VehicleJson::class.java)
             return vehicleData
         }
+
         fun getVehicleRecordFromJson(
             vehicleData: VehicleJson
         ): VehicleEntity {

@@ -1,6 +1,7 @@
 package br.com.lookatthiscar
 
-import br.com.lookatthiscar.config.H2TestConfig
+import br.com.lookatthiscar.config.DBConfig
+import br.com.lookatthiscar.config.PropertiesConfig
 import br.com.lookatthiscar.model.entity.VehicleEnquiry
 import br.com.lookatthiscar.repository.VehicleEnquiryRepository
 import br.com.lookatthiscar.repository.VehicleRepository
@@ -18,7 +19,7 @@ import java.time.LocalDateTime
 @RunWith(SpringRunner::class)
 @SpringBootTest(
     classes =
-    [H2TestConfig::class, VehicleEnquiriesService::class]
+    [DBConfig::class, PropertiesConfig::class, VehicleEnquiriesService::class]
 )
 @ActiveProfiles("test")
 class VehicleEnquiriesServiceTest {

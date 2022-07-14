@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration
 @ImportAutoConfiguration(classes = [FeignAutoConfiguration::class, HttpMessageConvertersAutoConfiguration::class])
 class FeignConfig {
 
-    @Value("\${placaapi.username:renanfr1047}")
+    @Value("\${placaapi.username}")
     private lateinit var username: String
 
     @Bean
