@@ -13,7 +13,7 @@ plugins {
 
 group = "br.com.lookatthiscar"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_18
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
