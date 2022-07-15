@@ -17,6 +17,13 @@ java.sourceCompatibility = JavaVersion.VERSION_18
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://agama-270167558056.d.codeartifact.us-east-1.amazonaws.com/maven/agama/")
+        credentials {
+            username = "aws"
+            password = System.getenv("CODEARTIFACT_AUTH_TOKEN")
+        }
+    }
 }
 
 ext {
@@ -81,7 +88,6 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:1.5.2.Final")
     // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation("com.h2database:h2")
-//    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.7.10")
