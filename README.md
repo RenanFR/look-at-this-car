@@ -23,6 +23,10 @@ Após a inicialização da instância fazemos o acesso via SSH e confirmamos o s
 sudo service codedeploy-agent status
 java -version
 ```
+A Role do IAM associada a instância tem os seguintes acessos: SSM para pegar as configurações no Parameter Store, S3, CodeDeploy e CodeArtifact
+
+O Security Group do RDS deve permitir o IP da instância EC2
+
 No diretório raiz temos o arquivo appspec.yml
 Ele é o responsável por executar os scripts relacionados ao funcionamento da aplicação dentro da VM
 Ele está associado a fase do CodePipeline referente ao CodeDeploy que por sua vez é acionado após a fase de build, ele pega os artefatos gerados pelo build como o jar do Spring Boot e os scripts sh e faz a atribuição de permissões de execução via chmod, a remoção dos artefatos antigos de build anterior do diretório server e a inicialização do Spring Boot por meio do jar
