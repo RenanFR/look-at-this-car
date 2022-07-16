@@ -33,3 +33,15 @@ Ele está associado a fase do CodePipeline referente ao CodeDeploy que por sua v
 O buildspec.yml por sua vez, também pode ser encontrado no diretório raiz do projeto e é responsável pela etapa de build por meio do CodeBuild
 Nele configuramos a versão do java utilizada pelo ambiente de build bem como o comando de build em si da aplicação que no caso utiliza o gradle
 Após execução dos testes e geração do artefato jar os arquivos listados na sessão files são posteriormente enviados para a instância através do CodeDeploy e baseado na configuração do appspec conforme mencionado anteriormente
+
+## Estrutura do projeto
+
+O projeto utiliza o flyway para versionamento e migração do banco de dados
+
+Os arquivos sql estão localizados no diretório migration e executam conforme a ordem de versão, havendo a tabela flyway_schema_history que é responsável por controlar quais migrações já executarão ou não
+
+O projeto está conectado ao SSM Parameter Store, serviço responsável por armazenamento de chaves de configuração e demais parâmetros da aplicação. O arquivo bootstrap.yml atribui aspectos de como será a recuperação das chaves como o contexto padrão, prefixo dos parâmetros e caractere separados de profile
+
+A aplicação utiliza o serviço Rekognition para fazer a leitura de texto a partir das imagens
+
+O Feign é usado para realizar a chamada http para o PlacaAPI que é o serviço responsável por nos trazer os dados dos veículos com base na placa previamente obtida a partir da imagem enviada pelo usuário com o Rekognition
